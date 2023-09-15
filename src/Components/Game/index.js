@@ -1,6 +1,10 @@
 import {Component} from 'react'
 import Popup from 'reactjs-popup'
 import {RiCloseLine} from 'react-icons/ri'
+import GameResult from '../GameResult'
+import PaperButton from '../PaperButton'
+import RockButton from '../RockButton'
+import ScissorsButton from '../ScissorsButton'
 
 import {
   AppContainer,
@@ -12,8 +16,6 @@ import {
   ScoreValuePara,
   GameContainer,
   InnerGameContainer,
-  GameElementImage,
-  CustomButton,
   RulesButtonContainer,
   RulesButton,
   ModalContainer,
@@ -21,12 +23,6 @@ import {
   CrossButtonStyle,
   CrossButton,
   ModalImage,
-  GameResultContainer,
-  ResultInnerGameContainer,
-  ResultContestantContainer,
-  ContestantPara,
-  ResultPara,
-  PlayAgainButton,
 } from './styledComponents'
 
 const choicesConstants = {
@@ -164,6 +160,17 @@ class Game extends Component {
     this.setState({yourChoice: choicesConstants.paper}, this.getOpponentChoice)
   }
 
+  onClickPlayAgainButton = () => {
+    this.setState({
+      showResult: false,
+      yourChoice: '',
+      opponentChoice: '',
+      yourImage: '',
+      opponentImage: '',
+      gameResult: '',
+    })
+  }
+
   render() {
     const {
       showResult,
@@ -193,61 +200,31 @@ class Game extends Component {
         {showResult === false && (
           <GameContainer>
             <InnerGameContainer>
-              <CustomButton
-                type="button"
-                data-testid="rockButton"
-                onClick={this.onClickRockButton}
-              >
-                <GameElementImage src={rockImage} alt="ROCK" />
-              </CustomButton>
-              <CustomButton
-                type="button"
-                data-testid="scissorsButton"
-                onClick={this.onClickScissorsButton}
-              >
-                <GameElementImage src={scissorsImage} alt="SCISSORS" />
-              </CustomButton>
+              <RockButton
+                rockImage={rockImage}
+                onClickRockButton={this.onClickRockButton}
+              />
+              <ScissorsButton
+                scissorsImage={scissorsImage}
+                onClickScissorsButton={this.onClickScissorsButton}
+              />
             </InnerGameContainer>
             <InnerGameContainer>
-              <CustomButton
-                type="button"
-                data-testid="paperButton"
-                onClick={this.onClickPaperButton}
-              >
-                <GameElementImage src={paperImage} alt="PAPER" />
-              </CustomButton>
+              <PaperButton
+                paperImage={paperImage}
+                onClickPaperButton={this.onClickPaperButton}
+              />
             </InnerGameContainer>
           </GameContainer>
         )}
+
         {showResult && (
-          <GameResultContainer>
-            <ResultInnerGameContainer>
-              <ResultContestantContainer>
-                <ContestantPara>YOU</ContestantPara>
-                <GameElementImage src={yourImage} alt="your choice" />
-              </ResultContestantContainer>
-              <ResultContestantContainer>
-                <ContestantPara>OPPONENT</ContestantPara>
-                <GameElementImage src={opponentImage} alt="opponent choice" />
-              </ResultContestantContainer>
-            </ResultInnerGameContainer>
-            <ResultPara>{gameResult}</ResultPara>
-            <PlayAgainButton
-              type="button"
-              onClick={() => {
-                this.setState({
-                  showResult: false,
-                  yourChoice: '',
-                  opponentChoice: '',
-                  yourImage: '',
-                  opponentImage: '',
-                  gameResult: '',
-                })
-              }}
-            >
-              Play Again
-            </PlayAgainButton>
-          </GameResultContainer>
+          <GameResult
+            yourImage={yourImage}
+            opponentImage={opponentImage}
+            gameResult={gameResult}
+            onClickPlayAgainButton={this.onClickPlayAgainButton}
+          />
         )}
 
         <RulesButtonContainer>

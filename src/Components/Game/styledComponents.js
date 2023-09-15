@@ -8,6 +8,7 @@ export const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-around;
 `
 export const IndicatorContainer = styled.div`
   height: 100px;
@@ -76,7 +77,6 @@ export const CustomButton = styled.button`
 `
 
 export const RulesButtonContainer = styled.div`
-  flex-grow: 1;
   width: 90%;
   display: flex;
   justify-content: flex-end;
